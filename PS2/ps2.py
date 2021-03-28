@@ -5,9 +5,7 @@ import random
 import ps2_visualize
 import pylab
 
-##################
-## Comment/uncomment the relevant lines, depending on which version of Python you have
-##################
+# Comment/uncomment the relevant lines, depending on which version of Python you have
 
 # For Python 3.5:
 # from ps2_verify_movement35 import testRobotMovement
@@ -246,13 +244,14 @@ class StandardRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        nextposition = self.getRobotPosition().getNewPosition(self.getRobotDirection(),self.speed)
+        nextposition = self.getRobotPosition().getNewPosition(self.getRobotDirection(), self.speed)
 
         if self.room.isPositionInRoom(nextposition) == False:
             self.setRobotDirection(random.randint(0, 359))
         else:
             self.setRobotPosition(nextposition)
             self.room.cleanTileAtPosition(nextposition)
+
 
 # Uncomment this line to see your implementation of StandardRobot in action!
 testRobotMovement(StandardRobot, RectangularRoom)
@@ -284,17 +283,17 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
         time_steps = 0
         room = RectangularRoom(width, height)
         robots = [robot_type(room, speed) for j in range(num_robots)]
-        while (room.getNumCleanedTiles()/room.getNumTiles()) < min_coverage:
+        while (room.getNumCleanedTiles() / room.getNumTiles()) < min_coverage:
             time_steps += 1
             # anim.update(room, robots)
             for robot in robots:
                 robot.updatePositionAndClean()
-            if (room.getNumCleanedTiles()/room.getNumTiles()) >= min_coverage:
+            if (room.getNumCleanedTiles() / room.getNumTiles()) >= min_coverage:
                 result.append(time_steps)
                 # anim.done()
             else:
                 continue
-    return sum(result)/len(result)
+    return sum(result) / len(result)
 
 
 # Uncomment this line to see how much your simulation takes on average
@@ -307,6 +306,7 @@ class RandomWalkRobot(Robot):
     A RandomWalkRobot is a robot with the "random walk" movement strategy: it
     chooses a new direction at random at the end of each time-step.
     """
+
     def updatePositionAndClean(self):
         """
         Simulate the passage of a single time-step.
@@ -314,7 +314,7 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        self.setRobotDirection(random.randint(0,359))
+        self.setRobotDirection(random.randint(0, 359))
         nextposition = self.getRobotPosition().getNewPosition(self.getRobotDirection(), self.speed)
         if self.room.isPositionInRoom(nextposition) == False:
             self.setRobotDirection(random.randint(0, 359))
